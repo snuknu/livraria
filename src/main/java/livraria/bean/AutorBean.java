@@ -1,11 +1,13 @@
 package livraria.bean;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 import livraria.dao.DAO;
 import livraria.modelo.Autor;
 
 @ManagedBean
+@RequestScoped
 public class AutorBean {
 
 	private Autor autor = new Autor();

@@ -3,12 +3,14 @@ package livraria.bean;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import livraria.dao.DAO;
 import livraria.modelo.Autor;
 import livraria.modelo.Livro;
 
 @ManagedBean
+@ViewScoped
 public class LivroBean {
 
 	private Livro livro = new Livro();
