@@ -45,8 +45,8 @@ public class LivroBean {
 		System.out.println("Gravando livro " + this.livro.getTitulo());
 
 		if (livro.getAutores().isEmpty()) {
-			//throw new RuntimeException("Livro deve ter pelo menos um Autor.");
-			FacesContext.getCurrentInstance().addMessage("autor", 
+			// throw new RuntimeException("Livro deve ter pelo menos um Autor.");
+			FacesContext.getCurrentInstance().addMessage("autor",
 					new FacesMessage("Livro deve ter pelo menos um Autor."));
 			return;
 		}
@@ -66,10 +66,10 @@ public class LivroBean {
 
 	// È possivel criar uma classe de validação especifica:
 	// https://www.digitalocean.com/community/tutorials/jsf-validation-example-tutorial-validator-tag-custom-validator
-	
-	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException{
+
+	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
 		String valor = value.toString();
-		if(!valor.startsWith("1")) {
+		if (!valor.startsWith("1")) {
 			throw new ValidatorException(new FacesMessage("Deveria começar com o dígito 1."));
 		}
 	}
