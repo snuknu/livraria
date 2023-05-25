@@ -63,6 +63,11 @@ public class LivroBean {
 	public void setAutorId(Integer autorId) {
 		this.autorId = autorId;
 	}
+	
+	public String formAutor() {
+		System.out.println("Chamando o formulário do Autor");
+		return "autor?faces-redirect=true";
+	}
 
 	// È possivel criar uma classe de validação especifica:
 	// https://www.digitalocean.com/community/tutorials/jsf-validation-example-tutorial-validator-tag-custom-validator
