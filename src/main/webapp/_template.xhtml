@@ -8,19 +8,32 @@
 <h:head />
 <h:body>
 
-	<ui:insert name="metadata"/>
+	<ui:insert name="metadata" />
 
 	<div id="cabecalho">
-		<h:graphicImage library="img" name="caelum-logo.png" style="width:200px" />
-		<h1><ui:insert name="titulo" /></h1>
+		<h:graphicImage library="img" name="caelum-logo.png"
+			style="width:200px" />
+		<h1>
+			<ui:insert name="titulo" />
+		</h1>
+		<h:form rendered="#{usuarioLogado != null}">
+			<h:commandLink value="Logout" action="#{loginBean.logout}" />
+		</h:form>
 	</div>
 
 	<div id="conteudo">
+		<h:messages globalOnly="true"/>
 		<ui:insert name="conteudo" />
 	</div>
-	
+
 	<div id="rodape">
-		<p><small><ui:insert name="pagina" /> - copyright 2012</small></p>
+		<p>
+			<small>Usuário: <h:outputText
+					value="#{sessionScope['usuarioLogado'].email}" /></small>
+		</p>
+		<p>
+			<small><ui:insert name="pagina" /> - copyright 2012</small>
+		</p>
 	</div>
 </h:body>
 

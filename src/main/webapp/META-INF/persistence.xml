@@ -8,6 +8,7 @@
 		transaction-type="RESOURCE_LOCAL">
 		<class>livraria.modelo.Autor</class>
 		<class>livraria.modelo.Livro</class>
+		<class>livraria.modelo.Usuario</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver"
 				value="org.postgresql.Driver" />

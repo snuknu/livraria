@@ -7,7 +7,17 @@
 	
 	<lifecycle>
 		<phase-listener>livraria.util.LogPhaseListener</phase-listener>
+		<phase-listener>livraria.util.Autorizador</phase-listener>
 		<phase-listener>livraria.util.ConnectionPhaseListener</phase-listener>
 	</lifecycle>
 	
+	<navigation-rule>
+	    <from-view-id>autor.xhtml</from-view-id>
+	    <navigation-case>
+	        <from-outcome>autor</from-outcome>
+	        <to-view-id>livro.xhtml</to-view-id>
+	        <redirect />
+	    </navigation-case>
+	</navigation-rule>
+
 </faces-config>

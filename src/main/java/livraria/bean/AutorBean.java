@@ -42,7 +42,7 @@ public class AutorBean {
 
 		this.autor = new Autor();
 
-		return "livro?faces-redirect=true";
+		return "autor";
 	}
 
 	public List<Autor> getAutores() {
