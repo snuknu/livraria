@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
 
+import livraria.util.DisconnectAfterRendering;
+
 public class DAO<T> {
 
 	private final Class<T> classe;
@@ -14,29 +16,17 @@ public class DAO<T> {
 	}
 
 	public void adiciona(T t) {
-
-		// consegue a entity manager
 		EntityManager em = new JPAUtil().getEntityManager();
-
-		// abre transacao
 		em.getTransaction().begin();
-
-		// persiste o objeto
 		em.persist(t);
-
-		// commita a transacao
 		em.getTransaction().commit();
-
-		// fecha a entity manager
 		em.close();
 	}
 
 	public void remove(T t) {
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
-
 		em.remove(em.merge(t));
-
 		em.getTransaction().commit();
 		em.close();
 	}
@@ -44,9 +34,7 @@ public class DAO<T> {
 	public void atualiza(T t) {
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
-
 		em.merge(t);
-
 		em.getTransaction().commit();
 		em.close();
 	}
@@ -57,15 +45,14 @@ public class DAO<T> {
 		query.select(query.from(classe));
 
 		List<T> lista = em.createQuery(query).getResultList();
-
-		em.close();
+		DisconnectAfterRendering.close(em);
 		return lista;
 	}
 
 	public T buscaPorId(Integer id) {
 		EntityManager em = new JPAUtil().getEntityManager();
 		T instancia = em.find(classe, id);
-		em.close();
+		DisconnectAfterRendering.close(em);
 		return instancia;
 	}
 
@@ -84,7 +71,7 @@ public class DAO<T> {
 
 		List<T> lista = em.createQuery(query).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 
-		em.close();
+		DisconnectAfterRendering.close(em);
 		return lista;
 	}
 

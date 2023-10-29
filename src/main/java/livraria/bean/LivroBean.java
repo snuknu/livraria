@@ -1,6 +1,7 @@
 package livraria.bean;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -19,6 +20,7 @@ public class LivroBean {
 
 	private Livro livro = new Livro();
 	private Integer autorId;
+	private Integer livroId;
 
 	public Livro getLivro() {
 		return livro;
@@ -37,6 +39,10 @@ public class LivroBean {
 		this.livro.adicionaAutor(autor);
 	}
 
+	public void removerAutorDoLivro(Autor autor) {
+		this.livro.removeAutor(autor);
+	}
+
 	public List<Livro> getLivros() {
 		return new DAO<Livro>(Livro.class).listaTodos();
 	}
@@ -45,15 +51,35 @@ public class LivroBean {
 		System.out.println("Gravando livro " + this.livro.getTitulo());
 
 		if (livro.getAutores().isEmpty()) {
-			// throw new RuntimeException("Livro deve ter pelo menos um Autor.");
 			FacesContext.getCurrentInstance().addMessage("autor",
 					new FacesMessage("Livro deve ter pelo menos um Autor."));
 			return;
 		}
 
-		new DAO<Livro>(Livro.class).adiciona(this.livro);
+		if (Objects.nonNull(this.livro.getId()))
+			alterar(this.livro);
+		else
+			new DAO<Livro>(Livro.class).adiciona(this.livro);
 
 		this.livro = new Livro();
+	}
+
+	public void alterar(Livro livro) {
+		System.out.println("Alterando livro " + this.livro.getTitulo());
+		if (livro == null) {
+			FacesContext.getCurrentInstance().addMessage("livro", new FacesMessage("Livro não existe na base"));
+			return;
+		}
+		new DAO<Livro>(Livro.class).atualiza(livro);
+	}
+
+	public void remover(Livro livro) {
+		System.out.println("Removendo livro " + this.livro.getTitulo());
+		if (livro == null) {
+			FacesContext.getCurrentInstance().addMessage("livro", new FacesMessage("Livro não existe na base"));
+			return;
+		}
+		new DAO<Livro>(Livro.class).remove(livro);
 	}
 
 	public Integer getAutorId() {
@@ -63,14 +89,30 @@ public class LivroBean {
 	public void setAutorId(Integer autorId) {
 		this.autorId = autorId;
 	}
-	
+
+	public Integer getLivroId() {
+		return livroId;
+	}
+
+	public void setLivroId(Integer livroId) {
+		this.livroId = livroId;
+	}
+
 	public String formAutor() {
 		System.out.println("Chamando o formulário do Autor");
 		return "autor?faces-redirect=true";
 	}
+	
+	public String formLivro() {
+		System.out.println("Chamando o formulário do Autor");
+		return "livro?faces-redirect=true";
+	}
+	
+	public void carregar(Integer idLivro) {
+		System.out.println("Chamando o formulário do Livro");
+		this.livro = new DAO<Livro>(Livro.class).buscaPorId(idLivro);
 
-	// È possivel criar uma classe de validação especifica:
-	// https://www.digitalocean.com/community/tutorials/jsf-validation-example-tutorial-validator-tag-custom-validator
+	}
 
 	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
 		String valor = value.toString();
