@@ -10,7 +10,8 @@
 	<ui:define name="metadata">
 		<f:metadata>
 			<f:viewParam name="autorId" value="#{autorBean.autorId}" />
-			<f:viewAction action="#{autorBean.carregarAutorPeloId}" if="#{param.autorId != null}"/>
+			<f:viewAction action="#{autorBean.carregarAutorPeloId}"
+				if="#{param.autorId != null}" />
 		</f:metadata>
 	</ui:define>
 
@@ -29,7 +30,16 @@
 						required="true" validatorMessage="O valor é necessário">
 						<f:validateLength minimum="5" />
 					</h:inputText>
-					<h:message for="nome" />
+
+					<h:outputLabel value="E-mail" for="email" />
+					<h:inputText id="email" value="#{autorBean.autor.email}"
+						required="true" validatorMessage="O valor é necessário">
+						<f:passThroughAttribute name="type" value="email" />
+					</h:inputText>
+
+					<h:message for="email" id="messageEmail" />
+					<h:message for="nome" id="messageNome" />
+
 					<h:commandButton value="Gravar" action="#{autorBean.gravar}" />
 				</h:panelGrid>
 			</fieldset>
