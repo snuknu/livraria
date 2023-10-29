@@ -29,27 +29,28 @@ public class LoginBean {
 
 		boolean existe = new UsuarioDAO().existe(this.usuario);
 		FacesContext context = FacesContext.getCurrentInstance();
-		
+
 		if (existe) {
 			context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
 			return "livro?faces-redirect=true";
 		}
-		
-		//context.addMessage("login:email", new FacesMessage("Usuário não encontrado!"));
+
+		// context.addMessage("login:email", new FacesMessage("Usuário não
+		// encontrado!"));
+		// O escopo flash -> permite guardar informações em duas requisições
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		context.addMessage(null, new FacesMessage("Usuário não encontrado!"));
 
 		return "livro?faces-redirect=true";
 
 	}
-	
+
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getSessionMap().remove("usuarioLogado");
 		return "login?faces-redirect=true";
 
 	}
-	
 
 	public String efetuarLoginOld() {
 		System.out.println("Fazendo login do usuário " + this.usuario.getEmail());
